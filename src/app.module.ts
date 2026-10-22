@@ -4,20 +4,20 @@ import { ThrottlerModule, ThrottlerGuard } from '@nestjs/throttler';
 import { APP_GUARD } from '@nestjs/core';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
+import { PrismaModule } from './prisma/prisma.module';
 
 @Module({
   imports: [
-    // Global .env configuration
     ConfigModule.forRoot({
       isGlobal: true,
     }),
-    // Rate Limiting: Max 100 requests per 60 seconds per IP
     ThrottlerModule.forRoot([
       {
         ttl: 60000,
         limit: 100,
       },
     ]),
+    PrismaModule,
   ],
   controllers: [AppController],
   providers: [
